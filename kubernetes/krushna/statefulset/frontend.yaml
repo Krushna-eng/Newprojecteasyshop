@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easyshop-frontend
+  namespace: easyshop
+  labels:
+    app: easyshop-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: easyshop-frontend
+  template:
+    metadata:
+      labels:
+        app: easyshop-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: krushnajhn/new-project:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: easyshop-config
+            - secretRef:
+                name: easyshop-secrets
